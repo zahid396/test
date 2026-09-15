@@ -1,0 +1,47 @@
+# Render Blueprint - https://render.com/docs/blueprint-spec
+# Replace <YOUR-REPO-URL> with your GitHub repository URL before deploying.
+
+services:
+  - type: web
+    name: live-test-production
+    runtime: docker
+    repo: <YOUR-REPO-URL>
+    plan: free
+    region: oregon
+    healthCheckPath: /up
+    dockerfilePath: ./Dockerfile
+    disk:
+      name: sqlite-data
+      mountPath: /var/www/html/storage
+      sizeGB: 1
+    envVars:
+      - key: APP_NAME
+        value: Live Test Production
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        value: https://live-test-production.onrender.com
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /var/www/html/storage/database/database.sqlite
+      - key: DB_JOURNAL_MODE
+        value: wal
+      - key: DB_BUSY_TIMEOUT
+        value: 5000
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: LOG_DEPRECATIONS_CHANNEL
+        value: null
+      - key: LOG_LEVEL
+        value: error
+      - key: BCRYPT_ROUNDS
+        value: 12
