@@ -20,7 +20,7 @@ COPY . .
 RUN npm run build
 
 
-FROM php:8.3-fpm AS app
+FROM php:8.4-fpm AS app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         nginx \
